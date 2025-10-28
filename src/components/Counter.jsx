@@ -1,29 +1,30 @@
 import {Component} from 'react';
+import { counterActions } from '../store/counter';
 import classes from './Counter.module.css';
 //useSelector allows us to access state from the redux store or parts of it
 //useDispatch is used to dispatch actions to the redux store
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'; 
 
 const Counter = () => {
   //It takes a function as an argument that receives the entire or part of redux state as an argument
   //If this component is by any chance removed from the real DOM, react-redux will automatically remove the subscription to the redux store
   //dispatch is the function we will use to dispatch actions to the redux store or reducer
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.showCounter);
-  
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
+
 
   const incrementHandler = () => {
-    dispatch({ type: 'increment' });
+    dispatch(counterActions.increment());
   };
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 });
+    dispatch(counterActions.increase(5)); //{type: SOME_UNIQUE_IDENTIFIER, payload: 5}
   };
   const decrementHandler = () => {
-    dispatch({ type: 'decrement' });
+    dispatch(counterActions.decrement());
   };
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' });
+    dispatch(counterActions.toggle());
   };
 
   return (
